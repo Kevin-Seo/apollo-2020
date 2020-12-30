@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { gql, useMutation } from "@apollo/client";
 
 const LIKE_MOVIE = gql`
-  mutation likeMovie($id: Int!, $isLiked: Boolean!) {
+  mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
     toggleLikeMovie(id: $id, isLiked: $isLiked ) @client
   }
 `;
@@ -27,7 +27,7 @@ const Poster = styled.div`
 `;
 
 export default function Movie({ id, bg, isLiked }) {
-  const [likeMovie] = useMutation(LIKE_MOVIE, {
+  const [toggleMovie] = useMutation(LIKE_MOVIE, {
     variables: { id: parseInt(id), isLiked: isLiked }
   });
   return (
@@ -35,7 +35,7 @@ export default function Movie({ id, bg, isLiked }) {
       <Link to={`/${id}`}>
         <Poster bg={bg} />
       </Link>
-      <button onClick={likeMovie}>
+      <button onClick={toggleMovie}>
         {isLiked ? "Unlike" : "Like"}
       </button>
     </Container>
